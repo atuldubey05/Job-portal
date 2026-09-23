@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 
 const Header = () => {
-  const isAuthenticated = true;
-  const user = { fullName: "Alex", role: "employer" };
+  const { user, isAuthenticated } = useAuth();
 
   return (
     <motion.header
