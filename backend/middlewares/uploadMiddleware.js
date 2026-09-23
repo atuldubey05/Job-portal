@@ -2,23 +2,23 @@ const multer = require("multer");
 
 // Configure storage
 const storage = multer.diskStorage({
-  destination: (req, res, cb) => {
+  destination: (req, file, cb) => {
     cb(null, "uploads/");
   },
-  filename: (req, res, cb) => {
-    cb(null, `${Date.now()}-${File.originalname}`);
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
 // File filter
-const fileFilter = (req, res, cb) => {
+const fileFilter = (req, file, cb) => {
   const allowedTypes = [
     "image/jpeg",
     "image/jpg",
     "image/png",
     "application/pdf",
   ];
-  if (allowedTypes.includes(fileFilter.mimetype)) {
+  if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
     cb(
