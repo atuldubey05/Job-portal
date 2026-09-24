@@ -20,7 +20,7 @@ import {
 } from "../../utils/helper";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import uploadImage from "../utils/uploadImage";
+import uploadImage from "../../utils/uploadImage";
 import { useAuth } from "../../context/AuthContext";
 
 const SignUp = () => {
