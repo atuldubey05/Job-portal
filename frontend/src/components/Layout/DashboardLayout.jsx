@@ -6,7 +6,7 @@ import { NAVIGATION_MENU } from "../../utils/data";
 import ProfileDropdown from "./ProfileDropdown";
 
 const NavigationItem = ({ item, isActive, onClick, isCollapsed }) => {
-  const Icon = item.Icon;
+  const Icon = item.icon;
 
   return (
     <button
