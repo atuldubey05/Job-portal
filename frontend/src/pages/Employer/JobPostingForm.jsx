@@ -45,7 +45,7 @@ function JobPostingForm() {
       [field]: value,
     }));
 
-    // Clear error ehen user starts typing
+    // Clear error when user starts typing
     if (errors[field]) {
       setErrors((prev) => ({
         ...prev,
@@ -77,7 +77,7 @@ function JobPostingForm() {
 
     try {
       const response = jobId
-        ? await axiosInstance.put(API_PATHS.JOBS.UNSAVE_JOB(jobId), jobPayload)
+        ? await axiosInstance.put(API_PATHS.JOBS.UPDATE_JOB(jobId), jobPayload)
         : await axiosInstance.post(API_PATHS.JOBS.POST_JOB, jobPayload);
 
       if (response.status === 200 || response.status === 201) {
@@ -99,7 +99,7 @@ function JobPostingForm() {
       }
 
       console.error("Unexpected response:", response);
-      toast.error("Something went wromg. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } catch (error) {
       if (error.response?.data?.message) {
         console.error("API Error:", error.response.data.message);
@@ -166,13 +166,13 @@ function JobPostingForm() {
                   Post a New Job
                 </h2>
                 <p className="text-sm text-gray-600 mt-1">
-                  Fill out the form below to create your job porting
+                  Fill out the form below to create your job posting
                 </p>
               </div>
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => setIsPreview(true)}
-                  disabled={!isFormValid}
+                  disabled={!isFormValid()}
                   className="group flex items-center space-x-2 px-6 py-3 text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-0.5"
                 >
                   <Eye className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
@@ -276,7 +276,7 @@ function JobPostingForm() {
                 </label>
                 <div className="grid grid-cols-3 gap-3">
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-enents-none z-10">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                       <DollarSign className="h-5 w-5 text-gray-400" />
                     </div>
                     <input
@@ -290,7 +290,7 @@ function JobPostingForm() {
                     />
                   </div>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-enents-none z-10">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none z-10">
                       <DollarSign className="h-5 w-5 text-gray-400" />
                     </div>
                     <input

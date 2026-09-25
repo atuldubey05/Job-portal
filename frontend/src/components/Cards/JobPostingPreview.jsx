@@ -26,7 +26,7 @@ function JobPostingPreview({ formData, setIsPreview }) {
             </div>
             <button
               onClick={() => setIsPreview(false)}
-              className="group flex items-center space-x-2 px-6 py-3 text-xs md:text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all dureation-300 shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-0.5"
+              className="group flex items-center space-x-2 px-6 py-3 text-xs md:text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-0.5"
             >
               <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <span>Back to Edit</span>
@@ -37,7 +37,7 @@ function JobPostingPreview({ formData, setIsPreview }) {
             {/* Hero section with clean background */}
             <div className="relative bg-white px-0 pb-8 mt-8 border-b border-gray-100">
               <div className="relative z-10">
-                <div className="flex items-start justify-between mb-o">
+                <div className="flex items-start justify-between mb-0">
                   <div className="flex-1">
                     <h1 className="text-lg lg:text-xl font-semibold mb-2 leading-tight text-gray-900">
                       {formData.jobTitle}
@@ -110,13 +110,13 @@ function JobPostingPreview({ formData, setIsPreview }) {
                               (c) => c.value === formData.currency,
                             )?.label
                           }
-                          {formData.salaryMin.toLocalString()}-{" "}
+                          {formData.salaryMin.toLocaleString()}-{" "}
                           {
                             currencies.find(
                               (c) => c.value === formData.currency,
                             )?.label
                           }
-                          {formData.salaryMax.toLocalString()}
+                          {formData.salaryMax.toLocaleString()}
                           <span className="text-sm md:text-lg text-gray-600 font-normal ml-1">
                             per year
                           </span>
@@ -138,7 +138,7 @@ function JobPostingPreview({ formData, setIsPreview }) {
                   <span className="text-base md:text-lg">About This Role</span>
                 </h3>
                 <div className="bg-gray-50 border border-gray-100 rounded-xl p-6">
-                  <div className="text-sm text-gray-700 leadng-relaxed whitespace-pre-wrap">
+                  <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
                     {formData.description}
                   </div>
                 </div>
@@ -153,7 +153,7 @@ function JobPostingPreview({ formData, setIsPreview }) {
                   </span>
                 </h3>
                 <div className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-100 rounded-xl p-6">
-                  <div className="text-sm text-gray-700 leadng-relaxed whitespace-pre-wrap">
+                  <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
                     {formData.requirements}
                   </div>
                 </div>
