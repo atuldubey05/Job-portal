@@ -18,15 +18,16 @@ function JobPostingPreview({ formData, setIsPreview }) {
       <div className="max-w-4xl mx-auto">
         {/* Header with glassmorphism effect */}
         <div className="mb-8 backdrop-blur-sm bg-white/80 border-white/20 shadow-xl rounded-2xl px-6 pt-6">
-          <div className="flex items-center justify-center">
+          <div className="relative flex items-center justify-center">
             <div className="flex items-center space-x-4">
               <h2 className="text-lg md:text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                 Job Preview
               </h2>
             </div>
+
             <button
               onClick={() => setIsPreview(false)}
-              className="group flex items-center space-x-2 px-6 py-3 text-xs md:text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-0.5"
+              className="absolute right-4 group flex items-center space-x-2 px-6 py-3 text-xs md:text-sm font-medium text-gray-600 hover:text-white bg-white/50 hover:bg-gradient-to-r hover:from-blue-500 hover:to-blue-600 border border-gray-200 hover:border-transparent rounded-xl transition-all duration-300 shadow-lg shadow-gray-100 hover:shadow-xl transform hover:-translate-y-0.5"
             >
               <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
               <span>Back to Edit</span>

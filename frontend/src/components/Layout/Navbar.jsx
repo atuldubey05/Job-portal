@@ -25,7 +25,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/find-jobs" className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
               <Briefcase className="w-5 h-5 text-white" />
             </div>
@@ -36,7 +36,7 @@ const Navbar = () => {
           <div className="flex items-center space-x-3">
             {user && (
               <button
-                className="p-2 rounded-xl hover:bg-gray-100 transition-colors duration-200 relative"
+                className="p-2 rounded-xl hover:bg-gray-100 transition-colors duration-200 relative cursor-pointer"
                 onClick={() => navigate("/saved-jobs")}
               >
                 <Bookmark className="h-5 w-5 text-gray-500" />

@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import {
   Users,
-  Calender,
+  Calendar,
   MapPin,
   Briefcase,
   Download,
@@ -182,7 +182,7 @@ function ApplicationViewer() {
                                   {application.applicant.email}
                                 </p>
                                 <div className="flex items-center gap-1 mt-1 text-gray-500 text-xs">
-                                  <Calender className="h-3 w-3" />
+                                  <Calendar className="h-3 w-3" />
                                   <span>
                                     Applied{" "}
                                     {moment(application.createdAt)?.format(
