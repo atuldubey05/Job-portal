@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const User = require("../models/User");
+const cloudinary = require("../config/cloudinary");
 
 // @desc Update user profile (name, avatar, company details)
 exports.updateProfile = async (req, res) => {
@@ -46,36 +47,37 @@ exports.updateProfile = async (req, res) => {
 // @desc Delete resume file  (Jobseeker only)
 exports.deleteResume = async (req, res) => {
   try {
-    const { resumeUrl } = req.body; // except resumeUrl to be the URL of the resume
-
-    // Extract file name from the URL
-    const fileName = resumeUrl?.split("/")?.pop();
-
+    const { resumeUrl } = req.body;
     const user = await User.findById(req.user._id);
     if (!user) return res.status(404).json({ message: "User not found" });
-
-    if (user.role !== "jobseeker")
+    if (user.role !== "jobseeker") {
       return res
         .status(403)
         .json({ message: "Only jobseeker can delete resume" });
-
-    // Construct the full file path
-    const filePath = path.join(__dirname, "../uploads", fileName);
-
-    // Check if the file exists and then delete
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath); // Delete the file
     }
-
-    // Set the user's resume to an empty string
+    // Agar resume Cloudinary ka hai, to uski public_id nikal kar destroy kar sakte hain
+    if (resumeUrl && resumeUrl.includes("cloudinary.com")) {
+      try {
+        // e.g. https://res.cloudinary.com/.../jobportal/filename.pdf
+        const parts = resumeUrl.split("/");
+        const fileNameWithExt = parts.pop();
+        const folder = parts.pop();
+        const publicId = `${folder}/${fileNameWithExt.split(".")[0]}`;
+        await cloudinary.uploader.destroy(publicId, { resource_type: "raw" });
+      } catch (cloudErr) {
+        console.error("Failed to delete from Cloudinary:", cloudErr);
+      }
+    }
+    // Database me empty string set karein
     user.resume = "";
     await user.save();
-
-    res.json({ message: "Resume delete successfully" });
+    res.json({ message: "Resume deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+
+
 // @desc Get user public profile
 exports.getPublicProfile = async (req, res) => {
   try {

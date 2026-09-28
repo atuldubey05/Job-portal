@@ -117,15 +117,19 @@ const SavedJobs = () => {
                         : "space-y-4 lg:space-y-6"
                     }
                   >
-                    {savedJobList.map((savedJob) => (
-                      <JobCard
-                        key={savedJob._id}
-                        job={savedJob?.job}
-                        onClick={() => navigate(`/job/${savedJob?.job._id}`)}
-                        onToggleSave={() => handleUnsaveJob(savedJob?.job._id)}
-                        saved
-                      />
-                    ))}
+                    {savedJobList
+                      .filter((savedJob) => savedJob?.job) // 👈 Ye filter add karna hai
+                      .map((savedJob) => (
+                        <JobCard
+                          key={savedJob._id}
+                          job={savedJob?.job}
+                          onClick={() => navigate(`/job/${savedJob?.job._id}`)}
+                          onToggleSave={() =>
+                            handleUnsaveJob(savedJob?.job._id)
+                          }
+                          saved
+                        />
+                      ))}
                   </div>
                 </>
               )}

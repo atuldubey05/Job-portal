@@ -15,7 +15,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 
 const Login = () => {
-  const { login, user } = useAuth();
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -96,15 +96,8 @@ const Login = () => {
         setTimeout(() => {
           window.location.href =
             role === "employer" ? "/employer-dashboard" : "/find-jobs";
-        }, 2000);
+        }, 1500);
       }
-
-      // Redirect based on user role
-      setTimeout(() => {
-        const redirectPath =
-          user.role === "employer" ? "/employer-dashboard" : "/find-jobs";
-        window.location.href = redirectPath;
-      }, 1500);
     } catch (error) {
       setFormState((prev) => ({
         ...prev,

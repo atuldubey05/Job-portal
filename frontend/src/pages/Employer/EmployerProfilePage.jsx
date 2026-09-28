@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Building2, Mail, Edit3 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import axiosInstance from "../../utils/axiosInstance";
@@ -26,6 +26,21 @@ function EmployerProfilePage() {
   const [uploading, setUploading] = useState({ avatar: false, logo: false });
   const [saving, setSaving] = useState(false);
 
+  useEffect(() => {
+    if (user) {
+      const data = {
+        name: user.name || "",
+        email: user.email || "",
+        avatar: user.avatar || "",
+        companyName: user.companyName || "",
+        companyDescription: user.companyDescription || "",
+        companyLogo: user.companyLogo || "",
+      };
+      setProfileData(data);
+      setFormData(data);
+    }
+  }, [user]);
+
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -35,16 +50,15 @@ function EmployerProfilePage() {
 
   const handleImageUpload = async (file, type) => {
     setUploading((prev) => ({ ...prev, [type]: true }));
-
     try {
       const imgUploadRes = await uploadImage(file);
-      const avatarUrl = imgUploadRes.imageUrl || "";
-
-      // Update from data with new image URL
+      const uploadedUrl = imgUploadRes.imageUrl || "";
       const field = type === "avatar" ? "avatar" : "companyLogo";
-      handleImageChange(field, avatarUrl);
+      handleInputChange(field, uploadedUrl);
+      toast.success("Image uploaded successfully!");
     } catch (error) {
       console.error("Image upload failed:", error);
+      toast.error("Failed to upload image.");
     } finally {
       setUploading((prev) => ({ ...prev, [type]: false }));
     }
@@ -53,11 +67,9 @@ function EmployerProfilePage() {
   const handleImageChange = (e, type) => {
     const file = e.target.files[0];
     if (file) {
-      // Create preview URL
       const previewUrl = URL.createObjectURL(file);
       const field = type === "avatar" ? "avatar" : "companyLogo";
-      handleImageChange(field, previewUrl);
-
+      handleInputChange(field, previewUrl);
       // Upload image
       handleImageUpload(file, type);
     }
@@ -65,22 +77,20 @@ function EmployerProfilePage() {
 
   const handleSave = async () => {
     setSaving(true);
-
     try {
       const response = await axiosInstance.put(
         API_PATHS.AUTH.UPDATE_PROFILE,
         formData,
       );
-
       if (response.status === 200) {
         toast.success("Profile Details Updated Successfully!!");
-        // Update profile data and exit edit mode
-        setProfileData({ ...formData });
-        updateUser({ ...formData });
+        setProfileData({ ...response.data });
+        updateUser({ ...response.data });
         setEditMode(false);
       }
     } catch (error) {
       console.error("Profile update failed:", error);
+      toast.error(error.response?.data?.message || "Failed to update profile");
     } finally {
       setSaving(false);
     }
@@ -133,11 +143,18 @@ function EmployerProfilePage() {
                   </h2>
                   {/* Avatar and Name */}
                   <div className="flex items-center space-x-4">
-                    <img
-                      src={profileData.avatar}
-                      alt="Avatar"
-                      className="w-20 h-20 rounded-full object-cover border-4 border-blue-50"
-                    />
+                    {/* Avatar Fallback */}
+                    {profileData.avatar ? (
+                      <img
+                        src={profileData.avatar}
+                        alt="Avatar"
+                        className="w-20 h-20 rounded-full object-cover border-4 border-blue-50"
+                      />
+                    ) : (
+                      <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center border-4 border-blue-50 text-blue-600 font-bold text-xl">
+                        {profileData.name?.charAt(0)?.toUpperCase() || "U"}
+                      </div>
+                    )}
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800">
                         {profileData.name}
@@ -158,11 +175,18 @@ function EmployerProfilePage() {
 
                   {/* company Logo and Name */}
                   <div className="flex items-center space-x-4">
-                    <img
-                      src={profileData.companyLogo}
-                      alt="Company Logo"
-                      className="w-20 h-20 rounded-lg border-4 border-blue-50"
-                    />
+                    {/* Company Logo Fallback */}
+                    {profileData.companyLogo ? (
+                      <img
+                        src={profileData.companyLogo}
+                        alt="Company Logo"
+                        className="w-20 h-20 rounded-lg object-cover border-4 border-blue-50"
+                      />
+                    ) : (
+                      <div className="w-20 h-20 rounded-lg bg-blue-50 flex items-center justify-center border-4 border-blue-50 text-blue-600">
+                        <Building2 className="w-8 h-8" />
+                      </div>
+                    )}
                     <div>
                       <h3 className="text-lg font-semibold text-gray-800">
                         {profileData.companyName}

@@ -34,8 +34,8 @@ function ManageJobs() {
   const filteredAndSortedJobs = useMemo(() => {
     let filtered = jobs.filter((job) => {
       const matchesSearch =
-        job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        job.company.toLowerCase().includes(searchTerm.toLowerCase());
+        (job?.title?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+        (job?.company?.toLowerCase() || "").includes(searchTerm.toLowerCase());
       const matchesStatus =
         statusFilter === "All" || job.status === statusFilter;
       return matchesSearch && matchesStatus;

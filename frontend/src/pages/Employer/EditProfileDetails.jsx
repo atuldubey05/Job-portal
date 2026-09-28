@@ -1,4 +1,4 @@
-import { Save, X } from "lucide-react";
+import { Save, X, Building2, Upload } from "lucide-react";
 import DashboardLayout from "../../components/Layout/DashboardLayout";
 
 function EditProfileDetails({
@@ -33,17 +33,25 @@ function EditProfileDetails({
                     {/* Avatar Upload */}
                     <div className="flex items-center space-x-4">
                       <div className="relative">
-                        <img
-                          src={formData?.avatar}
-                          alt="Avatar"
-                          className="w-20 h-20 rounded-full object-cover border-4 border-gray-200"
-                        />
+                        {formData?.avatar ? (
+                          <img
+                            src={formData.avatar}
+                            alt="Avatar"
+                            className="w-20 h-20 rounded-full object-cover border-4 border-gray-200 shadow-sm"
+                          />
+                        ) : (
+                          <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center border-4 border-gray-200 text-blue-600 font-bold text-xl shadow-sm">
+                            {formData?.name?.charAt(0)?.toUpperCase() || "U"}
+                          </div>
+                        )}
+
                         {uploading?.avatar && (
-                          <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
+                          <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center">
                             <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                           </div>
                         )}
                       </div>
+
                       <div>
                         <label className="block">
                           <span className="sr-only">Choose avatar</span>
@@ -51,9 +59,12 @@ function EditProfileDetails({
                             type="file"
                             accept="image/*"
                             onChange={(e) => handleImageChange(e, "avatar")}
-                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-4 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
+                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors cursor-pointer"
                           />
                         </label>
+                        <p className="text-xs text-gray-400 mt-1">
+                          JPG, PNG ya WEBP (Max 5MB)
+                        </p>
                       </div>
                     </div>
 
@@ -95,17 +106,25 @@ function EditProfileDetails({
                     {/* Comapny Logo Upload */}
                     <div className="flex items-center space-x-4">
                       <div className="relative">
-                        <img
-                          src={formData.companyLogo}
-                          alt="Comapny Logo"
-                          className="w-20 h-20 rounded-lg object-cover border-4 border-gray-200"
-                        />
-                        {uploading.logo && (
-                          <div className="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center">
+                        {formData?.companyLogo ? (
+                          <img
+                            src={formData.companyLogo}
+                            alt="Company Logo"
+                            className="w-20 h-20 rounded-lg object-cover border-4 border-gray-200 shadow-sm"
+                          />
+                        ) : (
+                          <div className="w-20 h-20 rounded-lg bg-green-50 flex items-center justify-center border-4 border-gray-200 text-green-600 shadow-sm">
+                            <Building2 className="w-8 h-8" />
+                          </div>
+                        )}
+
+                        {uploading?.logo && (
+                          <div className="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center">
                             <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                           </div>
                         )}
                       </div>
+
                       <div>
                         <label className="block">
                           <span className="sr-only">Choose company logo</span>
@@ -113,9 +132,12 @@ function EditProfileDetails({
                             type="file"
                             accept="image/*"
                             onChange={(e) => handleImageChange(e, "logo")}
-                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 transition-colors"
+                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 transition-colors cursor-pointer"
                           />
                         </label>
+                        <p className="text-xs text-gray-400 mt-1">
+                          Company logo image (Square ratio recommended)
+                        </p>
                       </div>
                     </div>
 

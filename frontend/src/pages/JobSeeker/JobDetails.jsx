@@ -1,6 +1,6 @@
 import { MapPin, DollarSign, Building2, Clock, Users } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 function JobDetails() {
   const { user } = useAuth();
   const { jobId } = useParams();
+  const navigate = useNavigate();
 
   const [jobDetails, setJobDetails] = useState(null);
   const getJobDetailsById = async () => {
@@ -28,7 +29,20 @@ function JobDetails() {
     }
   };
 
-  const applyToJob = async () => {
+    const applyToJob = async () => {
+    // 1. Agar user login nahi hai to alert dekar login page par bhejein
+    if (!user) {
+      toast.error("Please login to apply");
+      navigate("/login");
+      return; 
+    }
+
+    // 2. Agar employer login hai to wo apply na kar sake
+    if (user.role === "employer") {
+      toast.error("Employers cannot apply for jobs");
+      return;
+    }
+
     try {
       if (jobId) {
         await axiosInstance.post(API_PATHS.APPLICATIONS.APPLY_TO_JOB(jobId));
@@ -43,7 +57,7 @@ function JobDetails() {
   };
 
   useEffect(() => {
-    if (jobId && user) {
+    if (jobId) {
       getJobDetailsById();
     }
   }, [jobId, user]);

@@ -48,7 +48,7 @@ function ApplicationViewer() {
 
   // Group applications by job
   const groupedApplications = useMemo(() => {
-    const filtered = applications.filter((app) => app.job.title.toLowerCase());
+    const filtered = applications.filter((app) => app?.job?.title);
 
     return filtered.reduce((acc, app) => {
       const jobId = app.job._id;

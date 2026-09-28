@@ -32,7 +32,7 @@ export const API_PATHS = {
   APPLICATIONS: {
     APPLY_TO_JOB: (id) => `/api/applications/${id}`,
     GET_ALL_APPLICATIONS: (id) => `/api/applications/job/${id}`,
-    UPDATE_STATUS: (id) => `/api/application/${id}/status`,
+    UPDATE_STATUS: (id) => `/api/applications/${id}/status`,
   },
 
   IMAGE: {
