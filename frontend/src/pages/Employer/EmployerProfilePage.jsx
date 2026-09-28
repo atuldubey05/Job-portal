@@ -67,13 +67,16 @@ function EmployerProfilePage() {
     setSaving(true);
 
     try {
-      const response = await axiosInstance.put(API_PATHS.AUTH.UPDATE_PROFILE, formData);
+      const response = await axiosInstance.put(
+        API_PATHS.AUTH.UPDATE_PROFILE,
+        formData,
+      );
 
-      if (response.status === 200){
+      if (response.status === 200) {
         toast.success("Profile Details Updated Successfully!!");
         // Update profile data and exit edit mode
-        setProfileData({...formData});
-        updateUser({...formData});
+        setProfileData({ ...formData });
+        updateUser({ ...formData });
         setEditMode(false);
       }
     } catch (error) {

@@ -177,9 +177,7 @@ function JobPostingForm() {
     };
     fetchJobDetails();
 
-    return () => {
-      
-    }
+    return () => {};
   }, []);
 
   if (isPreview) {

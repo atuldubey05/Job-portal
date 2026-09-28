@@ -14,9 +14,8 @@ import { useAuth } from "../../context/AuthContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 
-
 const Login = () => {
-  const {login, user} = useAuth()
+  const { login, user } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
